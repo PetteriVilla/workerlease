@@ -239,34 +239,7 @@
     }
     .lease-btn:hover { background: var(--accent-light); }
 
-    /* ── TRUST BAR ── */
-    .trust-bar {
-      background: var(--silver);
-      padding: 20px 48px;
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      overflow-x: auto;
-    }
-    .trust-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .trust-logos {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-    }
-    .trust-logo {
-      font-size: 15px;
-      font-weight: 700;
-      color: #94a3b8;
-      letter-spacing: -0.3px;
-    }
+
 
     /* ── HOW IT WORKS ── */
     .section { padding: 80px 48px; }
@@ -431,44 +404,7 @@
     }
     .plan:not(.featured) .plan-cta:hover { background: rgba(255,255,255,0.14); }
 
-    /* ── TESTIMONIALS / SOCIAL PROOF ── */
-    .testimonials { padding: 80px 48px; background: #f8fafc; }
-    .testimonials .section-title { margin-bottom: 48px; }
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .testimonial {
-      background: var(--white);
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 28px;
-      transition: box-shadow .2s;
-    }
-    .testimonial:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
-    .stars { color: #f59e0b; font-size: 14px; margin-bottom: 16px; }
-    .testimonial-text {
-      font-size: 15px;
-      color: #334155;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    .testimonial-author { display: flex; align-items: center; gap: 12px; }
-    .author-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #7c3aed);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      color: white;
-      font-weight: 700;
-    }
-    .author-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .author-role { font-size: 12px; color: var(--muted); }
+
 
     /* ── CTA SECTION ── */
     .cta-section {
@@ -603,17 +539,7 @@
   </div>
 </section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <span class="trust-label">Trusted by</span>
-  <div class="trust-logos">
-    <span class="trust-logo">Acme Corp</span>
-    <span class="trust-logo">NordTech</span>
-    <span class="trust-logo">Baltic VC</span>
-    <span class="trust-logo">Suomi Digital</span>
-    <span class="trust-logo">HelsiOS</span>
-  </div>
-</div>
+
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
@@ -748,49 +674,7 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="section-label">Social proof</div>
-  <div class="section-title">What our customers say</div>
 
-  <div class="testimonial-grid">
-    <div class="testimonial">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"We leased a sales AI for 12 months and closed 40% more deals. The analogy to a car lease made it easy to sell internally — CFO immediately understood the model."</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">TK</div>
-        <div>
-          <div class="author-name">Tommi Korhonen</div>
-          <div class="author-role">CEO, NordTech Solutions</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testimonial">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"We upgraded to GPT-4o the day it launched without any extra cost. That alone was worth the lease. It's like having the newest car model every year."</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">AL</div>
-        <div>
-          <div class="author-name">Anna Lehtonen</div>
-          <div class="author-role">COO, Baltic Ventures</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testimonial">
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">"Cancelled a €4,200/month hire and replaced them with two WorkerLease subscriptions. Quality went up, cost went down. No brainer."</p>
-      <div class="testimonial-author">
-        <div class="author-avatar">JV</div>
-        <div>
-          <div class="author-name">Janne Virtanen</div>
-          <div class="author-role">Founder, Suomi Digital</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- CTA -->
 <section class="cta-section">
