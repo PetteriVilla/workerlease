@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorkerLease — Always the latest model.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0a1628;
+      --blue:   #1a3a6e;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --silver: #e8edf5;
+      --muted:  #64748b;
+      --white:  #ffffff;
+      --text:   #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: #60a5fa; }
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    nav ul a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color .15s;
+    }
+    nav ul a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background .15s !important;
+    }
+    .nav-cta:hover { background: var(--accent-light) !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: var(--white);
+      padding: 96px 48px 80px;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      min-height: 560px;
+    }
+    .hero-text { flex: 1; max-width: 560px; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(96,165,250,0.15);
+      border: 1px solid rgba(96,165,250,0.3);
+      color: #93c5fd;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #60a5fa;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      max-width: 440px;
+    }
+    .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+    .btn-ghost {
+      color: #94a3b8;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .15s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+
+    /* ── HERO VISUAL — "car lease card" ── */
+    .hero-visual {
+      flex: 0 0 380px;
+    }
+    .lease-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+    }
+    .lease-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .worker-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .lease-status {
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: #86efac;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .worker-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .worker-role {
+      font-size: 13px;
+      color: #93c5fd;
+      margin-bottom: 20px;
+    }
+    .worker-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .spec {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .spec-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 3px;
+    }
+    .spec-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .lease-price {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .price-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+    .price-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+    .price-period { font-size: 14px; color: #64748b; font-weight: 400; }
+    .lease-btn {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .lease-btn:hover { background: var(--accent-light); }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--silver);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      overflow-x: auto;
+    }
+    .trust-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .trust-logos {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .trust-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: -0.3px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .section { padding: 80px 48px; }
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+    }
+    .step {
+      position: relative;
+    }
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .step h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+    .step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── PRICING ── */
+    .pricing-section {
+      background: var(--navy);
+      color: var(--white);
+      padding: 80px 48px;
+    }
+    .pricing-section .section-label { color: #60a5fa; }
+    .pricing-section .section-title { color: var(--white); }
+    .pricing-section .section-sub { color: #94a3b8; }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+    }
+    .plan {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      transition: border-color .2s, transform .2s;
+      cursor: pointer;
+    }
+    .plan:hover {
+      border-color: rgba(96,165,250,0.4);
+      transform: translateY(-3px);
+    }
+    .plan.featured {
+      border-color: var(--accent);
+      background: rgba(37,99,235,0.15);
+    }
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .plan-term {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .plan-price {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .plan-price sup { font-size: 20px; letter-spacing: 0; vertical-align: super; }
+    .plan-period { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+    .plan-features {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .plan-features li {
+      font-size: 14px;
+      color: #94a3b8;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .plan-features li:last-child { border: none; }
+    .plan-features li::before {
+      content: "✓";
+      color: #34d399;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .plan-cta {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+    }
+    .plan.featured .plan-cta {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .plan.featured .plan-cta:hover { background: var(--accent-light); }
+    .plan:not(.featured) .plan-cta {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+    }
+    .plan:not(.featured) .plan-cta:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── TESTIMONIALS / SOCIAL PROOF ── */
+    .testimonials { padding: 80px 48px; background: #f8fafc; }
+    .testimonials .section-title { margin-bottom: 48px; }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .testimonial {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 28px;
+      transition: box-shadow .2s;
+    }
+    .testimonial:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .stars { color: #f59e0b; font-size: 14px; margin-bottom: 16px; }
+    .testimonial-text {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: white;
+      font-weight: 700;
+    }
+    .author-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .author-role { font-size: 12px; color: var(--muted); }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+      padding: 80px 48px;
+      text-align: center;
+      color: var(--white);
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 40px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: #64748b;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    footer .logo { font-size: 16px; }
+
+    /* ── COMPARISON TABLE ── */
+    .comparison { padding: 80px 48px; }
+    .comparison-table {
+      width: 100%;
+      max-width: 720px;
+      border-collapse: collapse;
+      margin-top: 40px;
+    }
+    .comparison-table th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+    }
+    .comparison-table th:first-child { border-radius: 8px 0 0 0; }
+    .comparison-table th:last-child { border-radius: 0 8px 0 0; }
+    .comparison-table td {
+      padding: 14px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid #e2e8f0;
+      color: var(--text);
+    }
+    .comparison-table tr:nth-child(even) td { background: #f8fafc; }
+    .good { color: #16a34a; font-weight: 700; }
+    .bad { color: #dc2626; }
+    .neutral { color: var(--muted); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      nav ul { display: none; }
+      .hero { flex-direction: column; padding: 48px 20px; gap: 40px; }
+      .hero-visual { flex: 0 0 auto; width: 100%; }
+      .section, .pricing-section, .testimonials, .cta-section, .comparison { padding: 48px 20px; }
+      .trust-bar { padding: 16px 20px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Worker<span>Lease</span></div>
+  <ul>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#">Models</a></li>
+    <li><a href="#" class="nav-cta">Start leasing →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">AI Worker Leasing</div>
+    <h1>Always the<br><em>latest model.</em></h1>
+    <p>Lease an AI worker the same way you lease a car. Monthly subscription. No hiring process. No payroll. Upgrade or cancel anytime.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">See lease plans →</a>
+      <a href="#how" class="btn-ghost">↓ How it works</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="lease-card">
+      <div class="lease-card-header">
+        <div class="worker-avatar">🤖</div>
+        <div class="lease-status">● Active</div>
+      </div>
+      <div class="worker-name">Sales Assistant Pro</div>
+      <div class="worker-role">Outbound sales · CRM · Follow-ups</div>
+      <div class="worker-specs">
+        <div class="spec">
+          <div class="spec-label">Model</div>
+          <div class="spec-value">GPT-4o</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">Hours/mo</div>
+          <div class="spec-value">Unlimited</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">Lease term</div>
+          <div class="spec-value">12 months</div>
+        </div>
+        <div class="spec">
+          <div class="spec-label">Upgrade</div>
+          <div class="spec-value">Anytime</div>
+        </div>
+      </div>
+      <div class="lease-price">
+        <div>
+          <div class="price-label">Monthly lease</div>
+          <div class="price-value">€299 <span class="price-period">/ mo</span></div>
+        </div>
+        <button class="lease-btn">Lease now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by</span>
+  <div class="trust-logos">
+    <span class="trust-logo">Acme Corp</span>
+    <span class="trust-logo">NordTech</span>
+    <span class="trust-logo">Baltic VC</span>
+    <span class="trust-logo">Suomi Digital</span>
+    <span class="trust-logo">HelsiOS</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-label">Process</div>
+  <div class="section-title">Lease a worker in minutes</div>
+  <p class="section-sub">Just like leasing a car — choose your model, sign the agreement, and drive off. No months-long hiring process.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Choose your worker model</h3>
+      <p>Browse our catalog of pre-trained AI workers — sales, support, research, coding, admin. Pick the profile that fits your need.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Select your lease term</h3>
+      <p>Month-to-month for flexibility, or 12/24 months for the best rate. Same logic as auto leasing — commit more, pay less.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Onboard in one day</h3>
+      <p>Connect your tools — Slack, email, CRM — and your worker is ready by tomorrow morning. No HR paperwork.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Upgrade anytime</h3>
+      <p>New AI model released? Upgrade your worker like you'd upgrade your lease. Always driving the latest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison">
+  <div class="section-label">Why lease?</div>
+  <div class="section-title">Hire vs. Lease</div>
+  <p class="section-sub">The math is obvious. Traditional hiring is the old way of owning a company car.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Factor</th>
+        <th>Traditional hire</th>
+        <th>WorkerLease</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Time to start</td>
+        <td class="bad">2–4 months</td>
+        <td class="good">1 day</td>
+      </tr>
+      <tr>
+        <td>Monthly cost</td>
+        <td class="bad">€3,500+ (+ benefits)</td>
+        <td class="good">From €299/mo</td>
+      </tr>
+      <tr>
+        <td>Works 24/7</td>
+        <td class="bad">No</td>
+        <td class="good">Yes</td>
+      </tr>
+      <tr>
+        <td>Upgrade to latest AI</td>
+        <td class="bad">Not possible</td>
+        <td class="good">Included</td>
+      </tr>
+      <tr>
+        <td>Cancel flexibility</td>
+        <td class="bad">Severance required</td>
+        <td class="good">End of term</td>
+      </tr>
+      <tr>
+        <td>Employer obligations</td>
+        <td class="bad">Full liability</td>
+        <td class="good">None</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-label">Lease plans</div>
+  <div class="section-title">Simple, transparent pricing</div>
+  <p class="section-sub">Like car leasing — longer terms mean lower monthly payments. Cancel at end of term.</p>
+
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-term">Month-to-month</div>
+      <div class="plan-price"><sup>€</sup>499</div>
+      <div class="plan-period">per worker / month</div>
+      <ul class="plan-features">
+        <li>1 AI worker</li>
+        <li>Unlimited tasks</li>
+        <li>Latest model included</li>
+        <li>Cancel anytime</li>
+        <li>Slack & email integration</li>
+      </ul>
+      <button class="plan-cta">Start leasing</button>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-badge">Most popular</div>
+      <div class="plan-term">12-month lease</div>
+      <div class="plan-price"><sup>€</sup>299</div>
+      <div class="plan-period">per worker / month</div>
+      <ul class="plan-features">
+        <li>1 AI worker</li>
+        <li>Unlimited tasks</li>
+        <li>Latest model included</li>
+        <li>Priority support</li>
+        <li>All integrations</li>
+        <li>Monthly performance report</li>
+      </ul>
+      <button class="plan-cta">Start leasing</button>
+    </div>
+
+    <div class="plan">
+      <div class="plan-term">24-month lease</div>
+      <div class="plan-price"><sup>€</sup>199</div>
+      <div class="plan-period">per worker / month</div>
+      <ul class="plan-features">
+        <li>1 AI worker</li>
+        <li>Unlimited tasks</li>
+        <li>Latest model included</li>
+        <li>Dedicated account manager</li>
+        <li>All integrations</li>
+        <li>Custom training</li>
+      </ul>
+      <button class="plan-cta">Start leasing</button>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Social proof</div>
+  <div class="section-title">What our customers say</div>
+
+  <div class="testimonial-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"We leased a sales AI for 12 months and closed 40% more deals. The analogy to a car lease made it easy to sell internally — CFO immediately understood the model."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">TK</div>
+        <div>
+          <div class="author-name">Tommi Korhonen</div>
+          <div class="author-role">CEO, NordTech Solutions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"We upgraded to GPT-4o the day it launched without any extra cost. That alone was worth the lease. It's like having the newest car model every year."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AL</div>
+        <div>
+          <div class="author-name">Anna Lehtonen</div>
+          <div class="author-role">COO, Baltic Ventures</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Cancelled a €4,200/month hire and replaced them with two WorkerLease subscriptions. Quality went up, cost went down. No brainer."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JV</div>
+        <div>
+          <div class="author-name">Janne Virtanen</div>
+          <div class="author-role">Founder, Suomi Digital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Stop hiring.<br>Start leasing.</h2>
+  <p>Your first AI worker, ready tomorrow.</p>
+  <a href="#pricing" class="btn-primary" style="font-size:16px; padding: 16px 40px;">Get started — from €199/mo →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Worker<span style="color:#60a5fa">Lease</span></div>
+  <div>workerlease.com · © 2025 WorkerLease</div>
+  <div>Privacy · Terms · Contact</div>
+</footer>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Plan hover interaction
+  document.querySelectorAll('.plan').forEach(plan => {
+    plan.addEventListener('click', () => {
+      document.querySelectorAll('.plan').forEach(p => p.style.transform = '');
+      plan.style.transform = 'translateY(-6px)';
+    });
+  });
+</script>
+
+</body>
+</html>
