@@ -273,6 +273,59 @@
       user-select: none;
     }
 
+    /* ── PROFILES ── */
+    .profiles-section { padding: 80px 48px; background: #f8fafc; }
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .profile-card {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 28px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .profile-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+    }
+    .profile-icon { font-size: 32px; margin-bottom: 14px; }
+    .profile-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .profile-tagline {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    .profile-features {
+      list-style: none;
+    }
+    .profile-features li {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 5px 0;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .profile-features li:last-child { border: none; }
+    .profile-features li::before {
+      content: "→";
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
     /* ── HOW IT WORKS ── */
     .section { padding: 80px 48px; }
     .section-label {
@@ -519,8 +572,8 @@
   <div class="logo">Worker<span>Lease</span></div>
   <ul>
     <li><a href="#how">How it works</a></li>
+    <li><a href="#profiles">Worker Profiles</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#">Models</a></li>
     <li><a href="#" class="nav-cta">Start leasing →</a></li>
   </ul>
 </nav>
@@ -577,6 +630,105 @@
 <!-- WATERMARK -->
 <div class="watermark">🚧 We are building our offering — not yet available for order 🚧</div>
 
+
+<!-- WORKER PROFILES -->
+<section class="profiles-section" id="profiles">
+  <div class="section-label">Worker Profiles</div>
+  <div class="section-title">Find your perfect AI worker</div>
+  <p class="section-sub">Eight ready-to-lease profiles, each trained for a specific role. Pick the one that fits — or lease multiple.</p>
+
+  <div class="profiles-grid">
+
+    <div class="profile-card">
+      <div class="profile-icon">🔍</div>
+      <div class="profile-name">Research Analyst</div>
+      <div class="profile-tagline">"Your always-on intelligence unit"</div>
+      <ul class="profile-features">
+        <li>Competitor & market mapping</li>
+        <li>Summaries and reports</li>
+        <li>News monitoring & trend detection</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">📝</div>
+      <div class="profile-name">Content Writer</div>
+      <div class="profile-tagline">"Publish daily, effortlessly"</div>
+      <ul class="profile-features">
+        <li>Blogs, social posts, newsletters</li>
+        <li>Product descriptions & ad copy</li>
+        <li>SEO-optimized content</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">📅</div>
+      <div class="profile-name">Executive Assistant</div>
+      <div class="profile-tagline">"Your calendar never misses a beat"</div>
+      <ul class="profile-features">
+        <li>Email management & replies</li>
+        <li>Meeting notes & scheduling</li>
+        <li>Travel bookings & coordination</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">📊</div>
+      <div class="profile-name">Data Analyst</div>
+      <div class="profile-tagline">"Turns raw data into decisions"</div>
+      <ul class="profile-features">
+        <li>Automated report generation</li>
+        <li>Excel/CSV analysis</li>
+        <li>Dashboards & visualizations</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">📞</div>
+      <div class="profile-name">Sales Assistant</div>
+      <div class="profile-tagline">"Pipeline never sleeps"</div>
+      <ul class="profile-features">
+        <li>Outbound prospecting</li>
+        <li>Follow-ups & CRM updates</li>
+        <li>Lead qualification</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">🎧</div>
+      <div class="profile-name">Customer Support Agent</div>
+      <div class="profile-tagline">"24/7, zero burnout"</div>
+      <ul class="profile-features">
+        <li>Live chat & ticket handling</li>
+        <li>FAQ responses</li>
+        <li>Escalation when needed</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">💻</div>
+      <div class="profile-name">Coding Assistant</div>
+      <div class="profile-tagline">"Ship faster, break less"</div>
+      <ul class="profile-features">
+        <li>Code review & refactoring</li>
+        <li>Bug detection & fixes</li>
+        <li>Documentation & testing</li>
+      </ul>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-icon">📣</div>
+      <div class="profile-name">Marketing Assistant</div>
+      <div class="profile-tagline">"Campaigns on autopilot"</div>
+      <ul class="profile-features">
+        <li>Campaign planning</li>
+        <li>Social media management</li>
+        <li>Analytics & optimization</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
