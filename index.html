@@ -253,6 +253,26 @@
       padding: 14px 48px;
     }
 
+    /* ── FULLPAGE STAMP ── */
+    .stamp {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      z-index: 9999;
+      pointer-events: none;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(220, 38, 38, 0.18);
+      border: 8px solid rgba(220, 38, 38, 0.18);
+      border-radius: 12px;
+      padding: 16px 40px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
     /* ── HOW IT WORKS ── */
     .section { padding: 80px 48px; }
     .section-label {
@@ -491,6 +511,9 @@
 </head>
 <body>
 
+<!-- STAMP -->
+<div class="stamp">Coming Soon</div>
+
 <!-- NAV -->
 <nav>
   <div class="logo">Worker<span>Lease</span></div>
@@ -552,7 +575,7 @@
 </section>
 
 <!-- WATERMARK -->
-<div class="watermark">🚧 We are building our offering 🚧</div>
+<div class="watermark">🚧 We are building our offering — not yet available for order 🚧</div>
 
 
 <!-- HOW IT WORKS -->
